@@ -40,8 +40,10 @@ class ProjectCalculator
         $load = 0;
         $features = $project->getProjectFeatures();
         foreach ($features as $feature) {
-            if ($featureCategoryId == $feature->getCategory()->getId()|null) {
+            if ($feature->getCategory() !== null) {
+                if ($featureCategoryId == $feature->getCategory()->getId()) {
                     $load += $feature->getDay();
+                }
             }
         }
         return round($load * $velocity, 2);
