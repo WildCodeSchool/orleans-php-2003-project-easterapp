@@ -14,9 +14,9 @@ class ProjectCalculator
     const JUNIOR_SPEED_COEFFICIENT=2;
     const VARIANTS=['low', 'middle', 'high'];
 
-    public function calculateProjectLoad(Project $project, $variant = 'High') : float
+    public function calculateProjectLoad(Project $project, $variant = '') : float
     {
-        if (!in_array($variant, self::VARIANTS)) {
+        if ($variant != '' && !in_array($variant, self::VARIANTS)) {
             return 0;
         }
 
@@ -29,7 +29,7 @@ class ProjectCalculator
         $theoreticalLoad=0;
         $features=$project->getProjectFeatures();
         foreach ($features as $feature) {
-            if ($feature->{'getIs'.ucfirst($variant)}()) {
+            if ($variant == '' || $feature->{'getIs'.ucfirst($variant)}()) {
                 $theoreticalLoad+=$feature->getDay();
             }
         }

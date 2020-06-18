@@ -69,7 +69,7 @@ class ProjectController extends AbstractController
         Project $project,
         ProjectCalculator $projectCalculator,
         ProjectRepository $projectRepository,
-        string $variant = 'high'
+        string $variant = ''
     ): Response {
 
         $featureCategories=$projectRepository->getCategories($project);
