@@ -1,3 +1,6 @@
+<a class="btn btn-sm btn-primary float-right " href="{{ path('project_feature_add', {'id':project.id}) }}">
+    <i class="fas fa-plus-circle"></i>
+</a>
 <table class="table table-hover feature-list">
 
     <thead>
@@ -14,14 +17,14 @@
         <tr>
             <td colspan="4" class="feature-category w-50">
                 <div><a class="collapse-toggler" data-toggle="collapse" href="#collapseDescription{{ featureCategory.id }}" aria-expanded="true" aria-controls="collapseDescription{{ featureCategory.id }}">
-                    Catégorie : {{ featureCategory.name }}
-                </a></div>
+                        Catégorie : {{ featureCategory.name }}
+                    </a></div>
             </td>
 
         </tr>
 
         {% for projectFeature in form.projectFeatures %}
-            {% if featureCategory.id == projectFeature.vars.data.category.id and attribute(projectFeature.vars.data, 'is'~option) %}
+            {% if featureCategory.id == projectFeature.vars.data.category.id %}
                 {{ include('project/_featureLine.html.twig') }}
             {%  endif %}
         {% endfor %}

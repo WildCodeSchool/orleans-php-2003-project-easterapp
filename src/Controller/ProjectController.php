@@ -62,14 +62,14 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit/{option}", name="project_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/{variant<high|middle|low>}", name="project_edit", methods={"GET","POST"})
      */
     public function edit(
         Request $request,
         Project $project,
         ProjectCalculator $projectCalculator,
         ProjectRepository $projectRepository,
-        string $option = 'high'
+        string $variant = 'high'
     ): Response {
 
         $featureCategories=$projectRepository->getCategories($project);
@@ -83,14 +83,13 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('project_index');
         }
 
-        $load = $projectCalculator->calculateProjectLoad($project, $option);
+        $load = $projectCalculator->calculateProjectLoad($project, $variant);
 
         return $this->render('project/edit.html.twig', [
             'project' => $project,
             'load' => $load,
             'form' => $form->createView(),
             'featureCategories' => $featureCategories,
-            'option' => ucfirst($option),
         ]);
     }
 
