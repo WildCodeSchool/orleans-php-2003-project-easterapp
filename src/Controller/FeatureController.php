@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FeatureController extends AbstractController
 {
-    const MAX_PER_PAGE = 10;
+    const MAX_PER_PAGE = 200;
 
     /**
      * @Route("/", name="feature_index", methods={"GET"})
