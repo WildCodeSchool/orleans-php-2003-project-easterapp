@@ -14,23 +14,26 @@
     <tbody>
 
     {% for featureCategory in featureCategories %}
-        <tr>
-            <td colspan="4" class="feature-category w-50">
-                <div><a class="collapse-toggler" data-toggle="collapse" href="#collapseDescription{{ featureCategory.id }}" aria-expanded="true" aria-controls="collapseDescription{{ featureCategory.id }}">
+    <tr>
+        <td colspan="4" class="feature-category w-50">
+            <div><a class="collapse-toggler" data-toggle="collapse"
+                    href="#collapseDescription{{ featureCategory.id }}" aria-expanded="true"
+                    aria-controls="collapseDescription{{ featureCategory.id }}">
                     Catégorie : {{ featureCategory.name }}
                 </a></div>
-            </td>
 
-        </tr>
+            {{ featureCategory.load }}
 
-        {% for projectFeature in form.projectFeatures %}
-            {% if featureCategory.id == projectFeature.vars.data.category.id %}
-                {{ include('project/_featureLine.html.twig') }}
-            {%  endif %}
-        {% endfor %}
-    {% else %}
+            {% for projectFeature in form.projectFeatures %}
+                {% if featureCategory.id == projectFeature.vars.data.category.id %}
+                    {{ include('project/_featureLine.html.twig') }}
+                {% endif %}
+            {% endfor %}
+            {% else %}
         <td>Pas de fonctionnalité enregistrées !</td>
-    {% endfor %}
+        {% endfor %}
+    </tr>
+
 
     </tbody>
 </table>

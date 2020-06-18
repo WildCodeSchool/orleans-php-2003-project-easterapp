@@ -10,7 +10,6 @@ use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use App\Service\ProjectCalculator;
 use DateTime;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,7 +70,13 @@ class ProjectController extends AbstractController
         ProjectRepository $projectRepository
     ): Response {
 
-        $featureCategories=$projectRepository->getCategories($project);
+        $featureCategories = $projectRepository->getCategories($project);
+        for ($i = 0; $i < count($featureCategories); $i++) {
+            $featureCategories[$i]['load'] = $projectCalculator->calculateProjectLoadByCategory(
+                $project,
+                $featureCategories[$i]['id']
+            );
+        }
 
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
@@ -108,7 +113,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("Feature/{id}", name="project_feature_delete", methods="POST")
-     * @param ProjectFeature         $projectFeature
+     * @param ProjectFeature $projectFeature
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
@@ -136,7 +141,7 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $projectFeature=new ProjectFeature();
+            $projectFeature = new ProjectFeature();
             $projectFeature->setProject($project);
             $projectFeature->setFeature($feature);
             $projectFeature->setDescription($feature->getDescription());
@@ -150,7 +155,7 @@ class ProjectController extends AbstractController
             $entityManager->persist($feature);
             $entityManager->flush();
 
-            return $this->redirectToRoute('project_edit', ['id'=>$project->getId()]);
+            return $this->redirectToRoute('project_edit', ['id' => $project->getId()]);
         }
 
         return $this->render('feature/new.html.twig', [
