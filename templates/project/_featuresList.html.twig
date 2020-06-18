@@ -20,9 +20,10 @@
                     href="#collapseDescription{{ featureCategory.id }}" aria-expanded="true"
                     aria-controls="collapseDescription{{ featureCategory.id }}">
                     Catégorie : {{ featureCategory.name }}
-                </a></div>
+                </a>
+                <p class="d-flex justify-content-end mr-5 pr-5">{{ featureCategory.load }} j*h</p>
+            </div>
 
-            {{ featureCategory.load }}
 
             {% for projectFeature in form.projectFeatures %}
                 {% if featureCategory.id == projectFeature.vars.data.category.id %}
