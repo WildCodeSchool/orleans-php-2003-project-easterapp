@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Project;
+use App\Entity\ProjectFeature;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -30,5 +31,22 @@ class ProjectCalculator
 
         //return
         return round($theoreticalLoad * $velocity, 2);
+    }
+
+    public function isAlive(ProjectFeature $projectFeature)
+    {
+        if ($projectFeature->getIsHigh()) {
+            return true;
+        }
+
+        if ($projectFeature->getIsMiddle()) {
+            return true;
+        }
+
+        if ($projectFeature->getIsLow()) {
+            return true;
+        }
+
+        return false;
     }
 }

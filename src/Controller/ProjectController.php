@@ -62,14 +62,14 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit/{option}", name="project_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/{estimation}", name="project_edit", methods={"GET","POST"})
      */
     public function edit(
         Request $request,
         Project $project,
         ProjectCalculator $projectCalculator,
         ProjectRepository $projectRepository,
-        string $option = 'high'
+        string $estimation = 'high'
     ): Response {
 
         $featureCategories=$projectRepository->getCategories($project);
@@ -90,7 +90,7 @@ class ProjectController extends AbstractController
             'load' => $load,
             'form' => $form->createView(),
             'featureCategories' => $featureCategories,
-            'option' => ucFirst($option),
+            'estimation' => ucfirst($estimation),
         ]);
     }
 
@@ -109,23 +109,30 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("Feature/{id}", name="project_feature_delete", methods="POST")
+     * @Route("Feature/{id}/{estimation}", name="project_feature_delete", methods="POST")
      * @param ProjectFeature         $projectFeature
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
     public function deleteProjectFeature(
         ProjectFeature $projectFeature,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        ProjectCalculator $projectCalculator,
+        string $estimation = 'High'
     ): Response {
-        $entityManager->remove($projectFeature);
+        $estimation=ucfirst($estimation);
+        $projectFeature->{'setIs'.$estimation}(false);
+
+        if (!$projectCalculator->isAlive($projectFeature)) {
+            $entityManager->remove($projectFeature);
+        }
         $entityManager->flush();
 
         /** @var Project */
         $project = $projectFeature->getProject();
         $projectId = $project->getId();
 
-        return $this->redirectToRoute('project_edit', ['id' => $projectId]);
+        return $this->redirectToRoute('project_edit', ['id' => $projectId, 'estimation'=>$estimation]);
     }
 
     /**

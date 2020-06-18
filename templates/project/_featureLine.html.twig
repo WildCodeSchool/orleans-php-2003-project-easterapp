@@ -26,9 +26,9 @@
         {{ form_widget(projectFeature.day) }} j*h
         {{ form_errors(projectFeature.day) }}
     </td>
-
+{{ dump(estimation)}}
     <td class="text-center">
-        <button title="Supprimer la fonctionnalité" class="btn btn-sm btn-primary" type="submit" formmethod="post" formaction="{{ path('project_feature_delete', {'id': projectFeature.vars.data.id}) }}">
+        <button title="Supprimer la fonctionnalité" class="btn btn-sm btn-primary" type="submit" formmethod="post" formaction="{{ path('project_feature_delete', {'id': projectFeature.vars.data.id, 'estimation': estimation ?? 'high'}) }}">
             <i class="fas fa-trash-alt"></i>
         </button>
     </td>
