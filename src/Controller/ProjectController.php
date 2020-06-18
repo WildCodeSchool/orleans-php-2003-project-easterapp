@@ -83,14 +83,14 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('project_index');
         }
 
-        $load = $projectCalculator->calculateProjectLoad($project);
+        $load = $projectCalculator->calculateProjectLoad($project, $option);
 
         return $this->render('project/edit.html.twig', [
             'project' => $project,
             'load' => $load,
             'form' => $form->createView(),
             'featureCategories' => $featureCategories,
-            'option' => ucFirst($option),
+            'option' => ucfirst($option),
         ]);
     }
 
