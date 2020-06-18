@@ -40,7 +40,7 @@ class ProjectCalculator
         $load = 0;
         $features = $project->getProjectFeatures();
         foreach ($features as $feature) {
-            if ($featureCategoryId == $feature->getCategory()->getId()) {
+            if ($featureCategoryId == $feature->getCategory()->getId()|null) {
                     $load += $feature->getDay();
             }
         }
