@@ -20,28 +20,23 @@ class ProjectCalculator
         return $velocity;
     }
 
-    public function calculateProjectLoad(Project $project): float
+    public function calculateProjectLoad(Project $project, int $featureCategoryId = 0): float
     {
         //get theoretical (expert based) project load
         $velocity = $this->getVelocity($project);
+        $features = $project->getProjectFeatures();
         $theoreticalLoad = 0;
-        $features = $project->getProjectFeatures();
-        foreach ($features as $feature) {
-            $theoreticalLoad += $feature->getDay();
-        }
-        return round($theoreticalLoad * $velocity, 2);
-    }
-
-    public function calculateProjectLoadByCategory(Project $project, int $featureCategoryId): float
-    {
-        $velocity = $this->getVelocity($project);
-        $load = 0;
-        $features = $project->getProjectFeatures();
-        foreach ($features as $feature) {
-            if ($feature->getCategory() !== null && $featureCategoryId == $feature->getCategory()->getId()) {
-                $load += $feature->getDay();
+        if ($featureCategoryId == 0) {
+            foreach ($features as $feature) {
+                $theoreticalLoad += $feature->getDay();
+            }
+        } else {
+            foreach ($features as $feature) {
+                if ($feature->getCategory() !== null && $featureCategoryId == $feature->getCategory()->getId()) {
+                    $theoreticalLoad += $feature->getDay();
+                }
             }
         }
-        return round($load * $velocity, 2);
+        return round($theoreticalLoad * $velocity, 2);
     }
 }

@@ -62,6 +62,11 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="project_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Project $project
+     * @param ProjectCalculator $projectCalculator
+     * @param ProjectRepository $projectRepository
+     * @return Response
      */
     public function edit(
         Request $request,
@@ -72,7 +77,7 @@ class ProjectController extends AbstractController
 
         $featureCategories = $projectRepository->getCategories($project);
         for ($i = 0; $i < count($featureCategories); $i++) {
-            $featureCategories[$i]['load'] = $projectCalculator->calculateProjectLoadByCategory(
+            $featureCategories[$i]['load'] = $projectCalculator->calculateProjectLoad(
                 $project,
                 $featureCategories[$i]['id']
             );

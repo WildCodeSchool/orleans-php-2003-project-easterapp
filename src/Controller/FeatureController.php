@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FeatureController extends AbstractController
 {
-    const MAX_PER_PAGE = 200;
+    const MAX_PER_PAGE = 10;
 
     /**
      * @Route("/", name="feature_index", methods={"GET"})
@@ -25,7 +25,7 @@ class FeatureController extends AbstractController
             ->getRepository(Feature::class)
             ->findBy(
                 ['isStandard'=>true],
-                ['name' => 'ASC'],
+                ['id' => 'DESC'],
                 self::MAX_PER_PAGE
             );
 
