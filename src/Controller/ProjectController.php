@@ -13,6 +13,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -98,10 +99,19 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('project_edit', ['id' => $project->getId()]);
+            /**
+             * @var SubmitButton
+             */
+            $button = $form->get('addFeature');
+            $route = $button->isClicked()
+                ? 'project_feature_add'
+                : 'project_edit';
+
+            return $this->redirectToRoute($route, ['id' => $project->getId()]);
         }
 
         $load = $projectCalculator->calculateProjectLoad($project);
+        $featureCategories=$projectRepository->getCategories($project);
 
         return $this->render('project/edit.html.twig', [
             'project' => $project,
@@ -146,10 +156,15 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("Project/{id}/add-feature", name="project_feature_add", methods={"GET", "POST"})
+     * @Route("/{id}/add-feature", name="project_feature_add", methods={"GET", "POST"})
      */
-    public function addProjectFeature(Project $project, Request $request): Response
-    {
+    public function addProjectFeature(
+        Request $request,
+        Project $project,
+        ProjectCalculator $projectCalculator,
+        ProjectRepository $projectRepository
+    ): Response {
+
         $feature = new Feature();
         $form = $this->createForm(FeatureType::class, $feature);
         $form->handleRequest($request);
@@ -175,6 +190,7 @@ class ProjectController extends AbstractController
         return $this->render('feature/new.html.twig', [
             'feature' => $feature,
             'form' => $form->createView(),
+            'id'=>$project->getId(),
         ]);
     }
 }
