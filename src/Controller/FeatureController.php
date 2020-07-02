@@ -80,7 +80,6 @@ class FeatureController extends AbstractController
             $this->addFlash('success', 'La modification a été réalisée avec succès');
 
             return $this->redirectToRoute('feature_index');
-
         }
 
         return $this->render('feature/edit.html.twig', [
@@ -99,8 +98,6 @@ class FeatureController extends AbstractController
             $entityManager->remove($feature);
             $entityManager->flush();
             $this->addFlash('success', 'La fonctionnalité a été supprimé avec succès');
-
-
         }
 
         return $this->redirectToRoute('feature_index');
