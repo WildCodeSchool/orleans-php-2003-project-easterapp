@@ -97,7 +97,7 @@ class FeatureController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($feature);
             $entityManager->flush();
-            $this->addFlash('success', 'La fonctionnalité a été supprimé avec succès');
+            $this->addFlash('success', 'La fonctionnalité a été supprimée avec succès');
         }
 
         return $this->redirectToRoute('feature_index');

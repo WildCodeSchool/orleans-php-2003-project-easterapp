@@ -6,12 +6,12 @@
     <h1>Liste des fonctionnalités récurrentes</h1>
     <a class="btn btn-sm btn-primary float-right " href="{{ path('feature_new') }}"><i
                 class="fas fa-plus-circle"></i></a>
-    <table class="table table-striped">
+    <table class="table table-striped" id="sortFeature">
         <thead>
         <tr>
-            <th>Nom</th>
+            <th onclick="sortTable(0)">Nom <i class="fas fa-sort"></i></th>
             <th>Charge</th>
-            <th>Catégorie</th>
+            <th onclick="sortTable(2)">Catégorie <i class="fas fa-sort"></i></th>
             <th>Description</th>
             <th></th>
         </tr>
@@ -39,4 +39,8 @@
     <div class="navigation my-5">
         {{ knp_pagination_render(features) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('features') }}
 {% endblock %}
