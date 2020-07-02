@@ -9,9 +9,9 @@
     <table class="table table-striped" id="sortFeature">
         <thead>
         <tr>
-            <th onclick="sortTable(0)">Nom <i class="fas fa-sort"></i></th>
+            <th id="nameSort">Nom <i class="fas fa-sort"></i></th>
             <th>Charge</th>
-            <th onclick="sortTable(2)">Catégorie <i class="fas fa-sort"></i></th>
+            <th id="categorySort">Catégorie <i class="fas fa-sort"></i></th>
             <th>Description</th>
             <th></th>
         </tr>
@@ -42,5 +42,6 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     {{ encore_entry_script_tags('features') }}
 {% endblock %}

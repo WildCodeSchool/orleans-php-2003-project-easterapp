@@ -35,3 +35,12 @@ function sortTable(n) {
         }
     }
 }
+
+window.addEventListener('load', function () {
+    document.getElementById("nameSort").addEventListener("click", function () {
+        sortTable(0);
+    });
+    document.getElementById("categorySort").addEventListener("click", function () {
+        sortTable(2);
+    });
+});
