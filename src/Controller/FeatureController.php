@@ -32,7 +32,7 @@ class FeatureController extends AbstractController
             'features' => $paginator->paginate(
                 $feature->findBy(
                     ['isStandard' => true],
-                    ['name' => 'ASC']
+                    ['id' => 'DESC']
                 ),
                 $request->query->getInt('page', 1),
                 self::NUMBER_PER_PAGE
