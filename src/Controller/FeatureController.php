@@ -21,9 +21,9 @@ class FeatureController extends AbstractController
 
     /**
      * @Route("/", name="feature_index", methods={"GET"})
-     * @param FeatureRepository  $feature
+     * @param FeatureRepository $feature
      * @param PaginatorInterface $paginator
-     * @param Request            $request
+     * @param Request $request
      * @return Response
      */
     public function index(FeatureRepository $feature, PaginatorInterface $paginator, Request $request): Response
@@ -31,7 +31,7 @@ class FeatureController extends AbstractController
         return $this->render('feature/index.html.twig', [
             'features' => $paginator->paginate(
                 $feature->findBy(
-                    ['isStandard'=>true],
+                    ['isStandard' => true],
                     ['name' => 'ASC']
                 ),
                 $request->query->getInt('page', 1),
@@ -56,6 +56,7 @@ class FeatureController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($feature);
             $entityManager->flush();
+            $this->addFlash('success', 'La fonctionnalité a été ajoutée avec succès');
 
             return $this->redirectToRoute('feature_index');
         }
@@ -76,8 +77,10 @@ class FeatureController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'La modification a été réalisée avec succès');
 
             return $this->redirectToRoute('feature_index');
+
         }
 
         return $this->render('feature/edit.html.twig', [
@@ -95,6 +98,9 @@ class FeatureController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($feature);
             $entityManager->flush();
+            $this->addFlash('success', 'La fonctionnalité a été supprimé avec succès');
+
+
         }
 
         return $this->redirectToRoute('feature_index');
