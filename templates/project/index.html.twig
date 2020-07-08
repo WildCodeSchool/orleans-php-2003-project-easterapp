@@ -1,9 +1,28 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
 
 {% block title %}Big Bill | Projets{% endblock %}
 
 {% block body %}
     <h1>Liste des projets</h1>
+    <div class="search">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">
+                {{ form_row(form.search) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.sortBy) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.orderBy) }}
+            </div>
+            <div class="col">
+        <button class="btn btn-outline-primary">Search</button>
+            </div>
+        {{ form_end(form) }}
+        </div>
+    </div>
     <div class="new-project text-right">
         <a href="{{ path('project_new') }}" class="btn" title="Nouveau projet">
             <i class="fas fa-plus-circle"></i>

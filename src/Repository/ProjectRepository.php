@@ -19,7 +19,17 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
-    public function getCategories(Project $project) : array
+    public function findLike(string $name = '', string $sortBy = 'date', $orderBy = 'DESC')
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.name LIKE :project')
+            ->setParameter('project', '%' . $name . '%')
+            ->orderBy('p.' . $sortBy, $orderBy)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getCategories(Project $project): array
     {
         return $this->createQueryBuilder('project')
             ->select('category.id, category.name')
@@ -29,7 +39,6 @@ class ProjectRepository extends ServiceEntityRepository
             ->leftJoin('project_feature.category', 'category')
             ->groupBy('category.id')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 }

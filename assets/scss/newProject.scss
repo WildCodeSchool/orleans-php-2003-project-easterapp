@@ -1,4 +1,9 @@
-
+.search {
+    background-color: $light;
+    form {
+        display: flex;
+    }
+}
 .new-project .fa-plus-circle {
     font-size: 2rem;
     color: #046077;

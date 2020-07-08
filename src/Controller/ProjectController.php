@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Feature;
 use App\Entity\Project;
 use App\Entity\ProjectFeature;
+use App\Entity\ProjectSearch;
 use App\Form\FeatureType;
+use App\Form\ProjectSearchType;
 use App\Form\ProjectType;
 use App\Form\SpecificFeatureType;
 use App\Repository\ProjectFeatureRepository;
@@ -30,19 +32,35 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/", name="project_index", methods={"GET"})
-     * @param ProjectRepository  $project
+     * @param ProjectRepository  $projectRepository
      * @param PaginatorInterface $paginator
      * @param Request            $request
      * @return Response
      */
-    public function index(ProjectRepository $project, PaginatorInterface $paginator, Request $request): Response
-    {
+    public function index(
+        ProjectRepository $projectRepository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response {
+        $projetSearch = new ProjectSearch();
+        $form = $this->createForm(ProjectSearchType::class, $projetSearch);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $projects = $projectRepository->findLike(
+                $projetSearch->getSearch() ?? '',
+                $projetSearch->getSortBy(),
+                $projetSearch->getOrderBy()
+            );
+        }
+
         return $this->render('project/index.html.twig', [
             'projects' => $paginator->paginate(
-                $project->findAll(),
+                $projects ?? $projectRepository->findAll(),
                 $request->query->getInt('page', 1),
                 self::NUMBER_PER_PAGE
             ),
+            'form' => $form->createView(),
         ]);
     }
 

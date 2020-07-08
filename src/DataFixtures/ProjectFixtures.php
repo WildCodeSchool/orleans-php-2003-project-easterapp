@@ -21,6 +21,16 @@ class ProjectFixtures extends Fixture implements DependentFixtureInterface
         'Versailles',
         'Wild Code School Odyssey',
         'Lab\'O',
+        'ProjetO1',
+        'ProjetO2',
+        'ProjetO3',
+        'ProjetO4',
+        'ProjetO5',
+        'ProjetO6',
+        'ProjetO7',
+        'ProjetO8',
+        'ProjetO9',
+        'Projet10',
     ];
 
     public function load(ObjectManager $manager)
