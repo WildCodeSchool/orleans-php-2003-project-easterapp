@@ -46,6 +46,6 @@ const initiateDataTable = function initiateDataTable() {
             },
         },
     });
-}
+};
 
 $(document).ready(initiateDataTable);
