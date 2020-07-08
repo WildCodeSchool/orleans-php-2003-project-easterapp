@@ -21,6 +21,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "datatables.net-bs4": "^1.10.21",
         "jquery": "^3.5.1",
         "mjml": "^4.6.3",
         "node-sass": "^4.12.0",

@@ -61,7 +61,7 @@ p{
     flex-direction: column;
 }
 
-input, textarea, select, .input-like{
+input, textarea, select, .input-like, .dataTables_length label select, .dataTables_filter label input{
     background:transparent;
     border:thin solid $light;
     border-radius: 2px;
@@ -73,6 +73,22 @@ input, textarea, select, .input-like{
     &:focus, &:hover{
         border : thin solid $primary;
         background : $light;
+    }
+}
+
+.dataTables_wrapper .row {
+    margin-bottom:$margin;
+}
+
+.dataTables_filter label{
+    display:flex;
+    padding : 0;
+    margin: 0px;
+    align-items: baseline;
+
+    input{
+        margin-left:5px;
+        height:100%;
     }
 }
 
