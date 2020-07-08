@@ -10,14 +10,16 @@ require('../scss/app.scss');
 
 // Need jQuery? Install it with 'yarn add jquery', then uncomment to require it.
 const $ = require('jquery');
-window.$ = window.jQuery = $;
+
+window.jQuery = $;
+window.$ = window.jQuery;
 
 // load the JS bootstrap part - note that bootstrap doesn't export anything
 require('bootstrap');
 
 const dt = require('datatables.net-bs4')(window, $);
 
-$(document).ready(function () {
+const initiateDataTable = function initiateDataTable() {
     $('#projectTable').dataTable({
         language: {
             decimal: '',
@@ -44,4 +46,6 @@ $(document).ready(function () {
             },
         },
     });
-});
+}
+
+$(document).ready(initiateDataTable);
