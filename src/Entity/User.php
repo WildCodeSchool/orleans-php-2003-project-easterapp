@@ -113,6 +113,10 @@ class User implements UserInterface, Serializable
      *     maxMessage="Le nom ne doit pas dépassé les {{ limit }} caractères",
      *     groups={"User","UserUpdate"}
      * )
+     * @Assert\Regex(
+     *     pattern="/^([a-zA-Z'àâéèêôùûïüçÀÂÉÈÔÙÛÎÛÇ[:blank:]-]{1,75})$/",
+     *     groups={"User","UserUpdate"}
+     * )
      */
     private $lastname;
 
@@ -125,6 +129,10 @@ class User implements UserInterface, Serializable
      * @Assert\Length(
      *     max="100",
      *     maxMessage="Le prénom ne doit pas dépassé les {{ limit }} caractères",
+     *     groups={"User","UserUpdate"}
+     * )
+     * @Assert\Regex(
+     *     pattern="/^([a-zA-Z'àâéèêôùûïüçÀÂÉÈÔÙÛÎÛÇ[:blank:]-]{1,75})$/",
      *     groups={"User","UserUpdate"}
      * )
      */
