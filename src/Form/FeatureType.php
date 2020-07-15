@@ -24,9 +24,7 @@ class FeatureType extends AbstractType
                     'autocomplete' => 'off',
                 ]
             ])
-            ->add('day', TextType::class, [
-                'attr' => ['class' => 'form-control', 'id' => 'day']
-            ])
+            ->add('day')
             ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'form-control', 'id' => 'description']
             ])
