@@ -114,7 +114,7 @@ class User implements UserInterface, Serializable
      *     groups={"User","UserUpdate"}
      * )
      * @Assert\Regex(
-     *     pattern="/^([a-zA-Z'àâéèêôùûïüçÀÂÉÈÔÙÛÎÛÇ[:blank:]-]{1,75})$/",
+     *     pattern="/^([a-zA-Z[:blank:]-]{1,75})$/",
      *     groups={"User","UserUpdate"}
      * )
      */
@@ -132,7 +132,7 @@ class User implements UserInterface, Serializable
      *     groups={"User","UserUpdate"}
      * )
      * @Assert\Regex(
-     *     pattern="/^([a-zA-Z'àâéèêôùûïüçÀÂÉÈÔÙÛÎÛÇ[:blank:]-]{1,75})$/",
+     *     pattern="/^([a-zA-Z[:blank:]-]{1,75})$/",
      *     groups={"User","UserUpdate"}
      * )
      */
